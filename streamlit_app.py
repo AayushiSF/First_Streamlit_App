@@ -29,3 +29,5 @@ streamlit.text(fruityvice_response.json())
 
 # Normalizing the JSON Version of API Response
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+# Presenting the Normalized output as Table
+streamlit.dataframe(fruityvice_normalized)
