@@ -70,17 +70,30 @@ except URLError as e:
  
 
 # Dont run anything past here while we troubleshoot
-streamlit.stop()   
+#streamlit.stop()   
 # import snowflake.connector
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-#my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
-my_cur.execute("SELECT * FROM PC_RIVERY_DB.PUBLIC.fruit_load_list")
-#my_data_row = my_cur.fetchone()
-my_data_rows = my_cur.fetchall()
-streamlit.header("Fruit Load List Contains:")
-streamlit.dataframe(my_data_rows)
 
+#Commenting 77-84 lines , replacing it by radio buttion code & Function
+#my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+#my_cur = my_cnx.cursor()
+#my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+#my_cur.execute("SELECT * FROM PC_RIVERY_DB.PUBLIC.fruit_load_list")
+#my_data_row = my_cur.fetchone()
+#my_data_rows = my_cur.fetchall()
+#streamlit.header("Fruit Load List Contains:")
+#streamlit.dataframe(my_data_rows)
+
+streamlit.header("The Fruit Load List Contains:")
+def get_fruit_load_list():
+     with my_cnx.cursor() as my_cur:
+          my_cur.execute("SELECT * FROM PC_RIVERY_DB.PUBLIC.fruit_load_list")
+          return my_cur.fetchall()
+# Creating a radio buttion
+if streamlit.button('Get Fruit Load List'):
+     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+     my_data_rows = get_fruit_load_list()
+     streamlit.dataframe(my_data_rows)
+     
 
 #Challenge
 
