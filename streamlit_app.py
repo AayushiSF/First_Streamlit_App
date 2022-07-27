@@ -38,17 +38,21 @@ streamlit.header("Fruityvice Fruit Advice!")
 
 
 #Adding a Text Entry Box and Send the Input to Fruityvice as Part of the API Call
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+#fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+try:
+  fruit_choice = streamlit.text_input('What fruit would you like information about?')
+if not fruit choice:
+  streamlit.error("Please select a fruit to get the information")  
+else:
+  #streamlit.write('The user entered ', fruit_choice)
+  # import requests
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+  # Normalizing the JSON Version of API Response
+  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+  # Presenting the Normalized output as Table
+  streamlit.dataframe(fruityvice_normalized)
 
-
-# Normalizing the JSON Version of API Response
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-# Presenting the Normalized output as Table
-streamlit.dataframe(fruityvice_normalized)
-
-streamlit.stop()   
+  streamlit.stop()   
 
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
