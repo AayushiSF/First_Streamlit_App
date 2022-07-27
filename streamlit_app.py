@@ -39,6 +39,16 @@ streamlit.header("Fruityvice Fruit Advice!")
 
 #Adding a Text Entry Box and Send the Input to Fruityvice as Part of the API Call
 #fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+
+# Creating a FUnction
+
+def get_fruityvice_data(this_fruit_choice):
+     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
+     # Normalizing the JSON Version of API Response
+     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+     # Presenting the Normalized output as Table
+     return fruityvice_normalized
+
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?')
   if not fruit_choice:
@@ -46,11 +56,13 @@ try:
   else:
       #streamlit.write('The user entered ', fruit_choice)
       # import requests
-      fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+      #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
       # Normalizing the JSON Version of API Response
-      fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+      #fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
       # Presenting the Normalized output as Table
-      streamlit.dataframe(fruityvice_normalized)
+      back_from_function = get_fruityvice_data(fruit_choice)      
+      #streamlit.dataframe(fruityvice_normalized)
+      streamlit.dataframe(back_from_function)
 
 except URLError as e:
     streamlit.error()
