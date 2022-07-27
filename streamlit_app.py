@@ -31,7 +31,6 @@ streamlit.header("Fruityvice Fruit Advice!")
 
 
 #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-
 #Let's removed the line of raw JSON, and separate the base URL from the fruit name (which will make it easier to use a variable there).
 #streamlit.text(fruityvice_response.json())
 #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
@@ -100,13 +99,13 @@ if streamlit.button('Get Fruit Load List'):
 #ALlow the end user to add the fruit to the list
 #add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 #streamlit.write('Thanks for adding ', add_my_fruit)
-#my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.fruit_load_list values ('From STREAMLIT')")
+
 
 
 # ALlow end user to add a fruit to the fruit list 
 def insert_row_snowflake(new_fruit):
      with my_cnx.cursor() as my_cur:
-          my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.fruit_load_list values ('from streamlit')")
+          my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.fruit_load_list values (' " + new_Fruit + " ')")
           return "Thanks for adding " + new_fruit
 # Creating a radio buttion
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
